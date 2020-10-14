@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Path("/alunos")
-@Produces(MediaType.APPLICATION_JSON)
+@Produces(MediaType.APPLICATION_XML)
 public class AlunoResource {
 
     private List<Aluno> bancoDados;
@@ -27,8 +27,13 @@ public class AlunoResource {
 
     @POST
     public Aluno createAluno(Aluno aluno) {
+
+        if(aluno == null) {
+            throw new BadRequestException("Amigo, você precisa informar os dados do aluno");
+        }
+
         if(aluno.getNome() == null || aluno.getCurso() == null) {
-            throw new BadRequestException("Nome e curso devem ser informado");
+            throw new BadRequestException("Nome e curso devem ser informados");
         }
 
         for(Aluno a: bancoDados) {
